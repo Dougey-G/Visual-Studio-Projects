@@ -20,8 +20,15 @@ namespace CatAndMouseGame
 
         Random rand;
 
-        _Mouse mouse;
+        static _Mouse mouse;
         _Cat cat;
+
+        SpriteFont basicFont;
+        float time = 30000;
+        string timeText = "Time remaining: ";
+        static bool isWinner = false;
+        static string winnerText;
+      
 
         public Game1()
         {
@@ -42,6 +49,10 @@ namespace CatAndMouseGame
         {
             // TODO: Add your initialization logic here
             IsMouseVisible = true;
+            mouse = new _Mouse(this);
+            Components.Add(mouse);
+            cat = new _Cat(this, mouse);
+            Components.Add(cat);
             base.Initialize();
         }
 
@@ -55,8 +66,9 @@ namespace CatAndMouseGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             rand = new Random();
             // TODO: use this.Content to load your game content here
-            mouse = new _Mouse(Content, "Mouse", rand.Next(0, WINDOW_WIDTH), rand.Next(0, WINDOW_HEIGHT));
-            cat = new _Cat(Content, "cat", rand.Next(0, WINDOW_WIDTH), rand.Next(0, WINDOW_HEIGHT));
+
+            basicFont = Content.Load<SpriteFont>("BasicFont");
+
         }
 
         /// <summary>
@@ -80,8 +92,28 @@ namespace CatAndMouseGame
 
             // TODO: Add your update logic here
             KeyboardState keyboard = Keyboard.GetState();
-            mouse.Update(gameTime, keyboard);
-            cat.Update(gameTime);
+
+
+            if (!isWinner && time > 0)
+            {
+                time -= gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else if (time <= 0)
+            {
+                isWinner = true;
+                winnerText = "The mouse wins! \n Press spacebar to start new game";
+            }
+
+            if (isWinner && keyboard.IsKeyDown(Keys.Space))
+            {
+                RestartGame();
+            }
+            else if (isWinner)
+            {
+                mouse.FreezeContent();
+                cat.FreezeContent();
+            }
+
 
             base.Update(gameTime);
         }
@@ -96,11 +128,32 @@ namespace CatAndMouseGame
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            mouse.Draw(spriteBatch);
-            cat.Draw(spriteBatch);
+            spriteBatch.DrawString(basicFont, timeText + (time / 1000).ToString(), new Vector2(100, 100), Color.White);
+
+            if (isWinner)
+            {
+                spriteBatch.DrawString(basicFont, winnerText, new Vector2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2), Color.White);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+
+        public static void CatIsWinner()
+        {
+            isWinner = true;
+            winnerText = "The cat wins! \n Press spacebar to start new game";
+        }
+
+        void RestartGame()
+        {
+            isWinner = false;
+            time = 30000;
+            mouse.UnFreezeContent();
+            mouse.RespawnInRandomLocation();
+            cat.UnFreezeContent();
+            cat.RespawnInRandomLocation();
         }
     }
 }

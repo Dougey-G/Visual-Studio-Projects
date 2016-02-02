@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>F:/Programming/Visual Studio Projects/CatAndMouseGame/CatAndMouseGame/Content/Mouse.png</SourceFile>
+  <SourceFile>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/Mouse.png</SourceFile>
   <SourceTime>2016-01-26T21:06:43.6531323-07:00</SourceTime>
-  <DestFile>F:/Programming/Visual Studio Projects/CatAndMouseGame/CatAndMouseGame/Content/bin/Windows/Mouse.xnb</DestFile>
-  <DestTime>2016-01-26T21:11:35.450824-07:00</DestTime>
+  <DestFile>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/bin/Windows/Mouse.xnb</DestFile>
+  <DestTime>2016-02-01T11:57:05.983964-07:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T11:14:44-06:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

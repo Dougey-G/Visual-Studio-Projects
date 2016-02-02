@@ -35,3 +35,9 @@
 /processorParam:TextureFormat=Color
 /build:Mouse.png
 
+#begin BasicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:BasicFont.spritefont
+

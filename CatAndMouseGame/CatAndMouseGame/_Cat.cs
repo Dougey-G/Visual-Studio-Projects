@@ -10,43 +10,82 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CatAndMouseGame
 {
-    public class _Cat
+    public class _Cat : Sprite
     {
-        Texture2D sprite;
-        Rectangle drawRectangle;
-        int moveAmount = 7;
+        float maxSpeed = 6f;
+        float speed = 6;
+        Vector2 velocity = new Vector2(0, -1);
+        Vector2 acceleration;
+        Vector2 linearAccel;
+        Vector2 angularAccel = new Vector2(100f, 100f);
+        Vector2 orientation;
+        float maxAccel = .05f;
+        float stopRadius = 30f;
+        float slowRadius = 100f;
+        float distance;
+        _Mouse target;
 
-        public _Cat(ContentManager contentManager, string spriteName, int x, int y)
+        public _Cat(Game game, _Mouse target)
+            : base(game)
         {
-            LoadContent(contentManager, spriteName, x, y);
+            this.target = target;
+            base.spriteName = "Cat";
+            acceleration = target.Position - this.Position;
+            base.LoadContent();
         }
 
-        private int X
+        public override void Update(GameTime gameTime)
         {
-            get { return drawRectangle.Center.X; }
-        }
+            base.Update(gameTime);
 
-        private int Y
-        {
-            get { return drawRectangle.Center.Y; }
-        }
+            if (!isFrozen)
+            {
+                //rotate based on orientation
+                base.rotation = (float)Math.Atan2(orientation.X, -orientation.Y);
+                acceleration = target.Position - this.Position;
+                distance = Math.Abs(acceleration.Length());
+                if (distance < stopRadius)
+                {
+                    speed = 0;
+                    Game1.CatIsWinner();
+                }
+                else if (distance < slowRadius)
+                {
+                    speed = maxSpeed * distance / slowRadius;
+                }
+                else
+                {
+                    speed = maxSpeed;
+                }
+                acceleration = Vector2.Normalize(target.Position - this.Position) * maxAccel;
+                velocity += velocity * gameTime.ElapsedGameTime.Milliseconds + .5f * acceleration * gameTime.ElapsedGameTime.Milliseconds * gameTime.ElapsedGameTime.Milliseconds;
+                velocity = Vector2.Normalize(velocity) * speed;
+                position += velocity;
+
+                if (velocity != Vector2.Zero)
+                {
+                    orientation = velocity;
+                }
 
 
-        public void Update(GameTime gameTime)
-        {
-
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(sprite, drawRectangle, Color.White);
-        }
-
-        private void LoadContent(ContentManager contentManager, string spriteName, int x, int y)
-        {
-            sprite = contentManager.Load<Texture2D>(spriteName);
-            drawRectangle = new Rectangle(x - sprite.Width / 2, y - sprite.Height / 2, sprite.Width, sprite.Height);
+                if (position.Y < 0)
+                {
+                    position.Y = 0;
+                }
+                else if (position.Y > Game1.WINDOW_HEIGHT)
+                {
+                    position.Y = Game1.WINDOW_HEIGHT;
+                }
+                if (position.X < 0)
+                {
+                    position.X = 0;
+                }
+                else if (position.X > Game1.WINDOW_WIDTH)
+                {
+                    position.X = Game1.WINDOW_WIDTH;
+                }
+            }
+          
         }
     }
 }
-

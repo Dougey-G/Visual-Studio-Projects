@@ -4,7 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>F:/Programming/Visual Studio Projects/CatAndMouseGame/CatAndMouseGame/Content/cat.png</File>
-    <File>F:/Programming/Visual Studio Projects/CatAndMouseGame/CatAndMouseGame/Content/Mouse.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/cat.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/Mouse.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/BasicFont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>
