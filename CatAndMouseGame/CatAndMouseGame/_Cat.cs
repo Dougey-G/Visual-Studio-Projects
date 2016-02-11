@@ -16,8 +16,6 @@ namespace CatAndMouseGame
         float speed = 6;
         Vector2 velocity = new Vector2(0, -1);
         Vector2 acceleration;
-        Vector2 linearAccel;
-        Vector2 angularAccel = new Vector2(100f, 100f);
         Vector2 orientation;
         float maxAccel = .05f;
         float stopRadius = 30f;
