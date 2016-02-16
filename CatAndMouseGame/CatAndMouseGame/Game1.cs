@@ -22,6 +22,8 @@ namespace CatAndMouseGame
 
         static _Mouse mouse;
         _Cat cat;
+        HalfDeadCat halfDeadCat;
+        CrazyCat crazyCat;
 
         SpriteFont basicFont;
         float time = 30000;
@@ -53,6 +55,10 @@ namespace CatAndMouseGame
             Components.Add(mouse);
             cat = new _Cat(this, mouse);
             Components.Add(cat);
+            halfDeadCat = new HalfDeadCat(this, mouse);
+            Components.Add(halfDeadCat);
+            crazyCat = new CrazyCat(this, mouse);
+            Components.Add(crazyCat);
             base.Initialize();
         }
 
@@ -110,8 +116,10 @@ namespace CatAndMouseGame
             }
             else if (isWinner)
             {
+                halfDeadCat.FreezeContent();
                 mouse.FreezeContent();
                 cat.FreezeContent();
+                crazyCat.FreezeContent();
             }
 
 
@@ -140,10 +148,10 @@ namespace CatAndMouseGame
         }
 
 
-        public static void CatIsWinner()
+        public static void AgentsAreWinners()
         {
             isWinner = true;
-            winnerText = "The cat wins! \n Press spacebar to start new game";
+            winnerText = "The agents win! \n Press spacebar to start new game";
         }
 
         void RestartGame()
@@ -154,6 +162,10 @@ namespace CatAndMouseGame
             mouse.RespawnInRandomLocation();
             cat.UnFreezeContent();
             cat.RespawnInRandomLocation();
+            halfDeadCat.UnFreezeContent();
+            halfDeadCat.RespawnInRandomLocation();
+            crazyCat.UnFreezeContent();
+            crazyCat.RespawnInRandomLocation();
         }
     }
 }

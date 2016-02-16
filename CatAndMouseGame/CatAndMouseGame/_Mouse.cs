@@ -13,22 +13,27 @@ namespace CatAndMouseGame
     public class _Mouse : Sprite
     {
         float moveAmount = 4f;
-        bool wasSpaceDown = false;
-        Vector2 velocity;
+        bool canJump = true;
+        Bar hyperjumpCooldown;
+        float jumpCooldownTime = 5000f;
+        float jumpCooldownCounter = 0f;
 
        
 
         public _Mouse(Game game)
             : base(game)
         {
+            hyperjumpCooldown = new Bar(game, -25f);
             base.spriteName = "Mouse";
         }
+
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             if (!isFrozen)
             {
+                hyperjumpCooldown.Position = new Vector2(position.X, position.Y + hyperjumpCooldown.Offset);
                 KeyboardState keyboard = Keyboard.GetState();
 
                 //Control mouse with keyboard
@@ -57,16 +62,22 @@ namespace CatAndMouseGame
                 }
 
 
-                //Jump mouse to random position if space is pressed.
-                if (!wasSpaceDown && keyboard.IsKeyDown(Keys.Space))
+                //Jump mouse to random position if space is pressed and cooldown is available
+                if (canJump && keyboard.IsKeyDown(Keys.Space))
                 {
                     RespawnInRandomLocation();
-                    wasSpaceDown = true;
+                    canJump = false;
+                    jumpCooldownCounter = 0f;
                 }
-                else if (keyboard.IsKeyUp(Keys.Space))
+                else if (jumpCooldownCounter < jumpCooldownTime)
                 {
-                    wasSpaceDown = false;
+                    jumpCooldownCounter += gameTime.ElapsedGameTime.Milliseconds;
                 }
+                else
+                {
+                    canJump = true;
+                }
+                hyperjumpCooldown.Scale = new Vector2(jumpCooldownCounter / jumpCooldownTime, 1f);
 
 
 
@@ -91,6 +102,13 @@ namespace CatAndMouseGame
                 //rotate based on orientation
                 base.rotation = (float)Math.Atan2(velocity.X, -velocity.Y);
             }
+        }
+
+        public override void UnFreezeContent()
+        {
+            jumpCooldownCounter = 0;
+            canJump = false;
+            base.UnFreezeContent();
         }
     }
 }

@@ -53,3 +53,6 @@ F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\Cat
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\bin\Windows\Debug\SharpDX.Direct3D9.xml
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\obj\x86\Debug\CatAndMouseGame.csprojResolveAssemblyReference.cache
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\bin\Windows\Debug\Content\BasicFont.xnb
+F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\bin\Windows\Debug\Content\halfDeadCat.xnb
+F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\bin\Windows\Debug\Content\crazyCat.xnb
+F:\Programming\Visual Studio Projects\Visual-Studio-Projects\CatAndMouseGame\CatAndMouseGame\bin\Windows\Debug\Content\cooldown.xnb

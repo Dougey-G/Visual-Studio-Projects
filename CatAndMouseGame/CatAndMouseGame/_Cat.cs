@@ -14,7 +14,6 @@ namespace CatAndMouseGame
     {
         float maxSpeed = 6f;
         float speed = 6;
-        Vector2 velocity = new Vector2(0, -1);
         Vector2 acceleration;
         Vector2 orientation;
         float maxAccel = .05f;
@@ -26,6 +25,7 @@ namespace CatAndMouseGame
         public _Cat(Game game, _Mouse target)
             : base(game)
         {
+            velocity = new Vector2(0, -1);
             this.target = target;
             base.spriteName = "Cat";
             acceleration = target.Position - this.Position;
@@ -45,7 +45,7 @@ namespace CatAndMouseGame
                 if (distance < stopRadius)
                 {
                     speed = 0;
-                    Game1.CatIsWinner();
+                    Game1.AgentsAreWinners();
                 }
                 else if (distance < slowRadius)
                 {

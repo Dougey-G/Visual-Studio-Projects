@@ -15,6 +15,8 @@ namespace CatAndMouseGame
         protected float rotation = 0;
         protected string spriteName;
         protected Vector2 position;
+        protected Vector2 scale;
+        protected Vector2 velocity;
 
         SpriteBatch spriteBatch;
         Random rand = new Random();
@@ -22,12 +24,13 @@ namespace CatAndMouseGame
         protected bool isFrozen = false;
 
         public Sprite(Game game)
-            :base(game)
+            : base(game)
         {
             drawRectangle = new Rectangle();
             drawRectangle.X = rand.Next(0, Game1.WINDOW_WIDTH);
             drawRectangle.Y = rand.Next(0, Game1.WINDOW_HEIGHT);
             position = new Vector2(drawRectangle.Center.X, drawRectangle.Center.Y);
+            scale = Vector2.One;
             LoadContent();
         }
 
@@ -36,15 +39,28 @@ namespace CatAndMouseGame
             get { return drawRectangle.Center.X; }
         }
 
-        public  int Y
+        public int Y
         {
             get { return drawRectangle.Center.Y; }
         }
 
         public Vector2 Position
         {
-            get { return position;  }
+            get { return position; }
+            set { position = value; }
         }
+
+        public Vector2 Scale
+        {
+            get { return scale; }
+            set { scale = value; }
+        }
+
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+        }
+
 
         public override void Initialize()
         {
@@ -63,7 +79,7 @@ namespace CatAndMouseGame
         {
             spriteBatch.Begin();
             //spriteBatch.Draw(sprite, drawRectangle, Color.White);
-            spriteBatch.Draw(sprite, position, null, Color.White, rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, position, null, Color.White, rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, 0);
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -80,12 +96,12 @@ namespace CatAndMouseGame
             position.Y = rand.Next(0, Game1.WINDOW_HEIGHT);
         }
 
-        public void FreezeContent()
+        public virtual void FreezeContent()
         {
             isFrozen = true;
         }
 
-        public void UnFreezeContent()
+        public virtual void UnFreezeContent()
         {
             isFrozen = false;
         }

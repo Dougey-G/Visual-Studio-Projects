@@ -38,6 +38,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bar.cs" />
+    <Compile Include="CrazyCat.cs" />
+    <Compile Include="HalfDeadCat.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="_Cat.cs" />
     <Compile Include="Game1.cs" />
