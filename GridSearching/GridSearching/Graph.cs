@@ -13,6 +13,8 @@ namespace GridSearching
 {
     class Graph
     {
+        enum SearchType { BREADTH, DIJKSTRA, ASTAR }
+        SearchType searchType;
         GridCell[,] gridCell;
         Node[,] nodeGrid;
         int width, height;
@@ -31,14 +33,16 @@ namespace GridSearching
             this.width = width;
             this.height = height;
             nodeGrid = new Node[width, height];
+            searchType = SearchType.BREADTH;
 
             //Initializes all of the nodes
             for (int i = 0; i < width; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
-                    gridCell[i, j].ChangeColor = Color.CornflowerBlue;
-                    nodeGrid[i, j] = new Node(gridCell[i, j]);
+                    if (!gridCell[i, j].IsBlocked)
+                        gridCell[i, j].ChangeColor = Color.CornflowerBlue;
+                    nodeGrid[i, j] = new Node(gridCell[i, j], i, j);
                 }
             }
 
@@ -50,26 +54,26 @@ namespace GridSearching
                     //if node has four neighbors
                     if (i != 0 && i != width - 1 && j != 0 && j != height - 1)
                     {
-                        nodeGrid[i, j].Neighbors = new List<Node> {nodeGrid[i, j + 1], nodeGrid[i + 1, j], nodeGrid[i, j - 1], nodeGrid[i - 1, j] };
+                        nodeGrid[i, j].Neighbors = new List<Edge> {new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                     }
                     //if node has two neighbors
                     else if ((i == 0 || i == width - 1) && (j == 0 || j == height - 1))
                     {
                         if (i == 0 && j == 0)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j + 1], nodeGrid[i + 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1) };
                         }
                         else if (i == 0 && j == height - 1)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i + 1, j], nodeGrid[i, j - 1] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1) };
                         }
                         else if (i == width - 1 && j == 0)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j + 1], nodeGrid[i - 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                         }
                         else if (i == width - 1 && j == height - 1)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j - 1], nodeGrid[i - 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                         }
                     }
                     //if node has three neighbors
@@ -77,34 +81,156 @@ namespace GridSearching
                     {
                         if (i == 0)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j + 1], nodeGrid[i + 1, j], nodeGrid[i, j - 1] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1) };
                             
                         }
                         else if (i == width - 1)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j + 1], nodeGrid[i, j - 1], nodeGrid[i - 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                         }
                         else if (j == 0)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i, j + 1], nodeGrid[i + 1, j], nodeGrid[i - 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                         }
                         else if (j == height - 1)
                         {
-                            nodeGrid[i, j].Neighbors = new List<Node> { nodeGrid[i + 1, j], nodeGrid[i, j - 1], nodeGrid[i - 1, j] };
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1) };
                         }
                     }
                 }
             }
         }
 
+        public Graph(GridCell[,] gridCell, int width, int height, bool isDijkstra)
+        {
+            this.gridCell = gridCell;
+            this.width = width;
+            this.height = height;
+            nodeGrid = new Node[width, height];
+            if (isDijkstra)
+            {
+                searchType = SearchType.DIJKSTRA;
+            }
+            else
+            {
+                searchType = SearchType.ASTAR;
+            }
+
+            //Initializes all of the nodes
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    if (!gridCell[i, j].IsBlocked)
+                        gridCell[i, j].ChangeColor = Color.CornflowerBlue;
+                    nodeGrid[i, j] = new Node(gridCell[i, j], i, j);
+                }
+            }
+
+            //Sets neighboring nodes for each node
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    //if node has 8 neighbors
+                    if (i != 0 && i != width - 1 && j != 0 && j != height - 1)
+                    {
+                        nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1),
+                        new Edge(nodeGrid[i, j], nodeGrid[i - 1, j - 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j - 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j + 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j + 1], (float)Math.Sqrt(2)),};
+                    }
+                    //if node has 3 neighbors
+                    else if ((i == 0 || i == width - 1) && (j == 0 || j == height - 1))
+                    {
+                        if (i == 0 && j == 0)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j + 1], (float)Math.Sqrt(2)) };
+                        }
+                        else if (i == 0 && j == height - 1)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j - 1], (float)Math.Sqrt(2)) };
+                        }
+                        else if (i == width - 1 && j == 0)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j + 1], (float)Math.Sqrt(2)) };
+                        }
+                        else if (i == width - 1 && j == height - 1)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j - 1], (float)Math.Sqrt(2)) };
+                        }
+                    }
+                    //if node has 5 neighbors
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1),
+                            new Edge(nodeGrid[i, j], nodeGrid[i + 1, j + 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j - 1], (float)Math.Sqrt(2))};
+
+                        }
+                        else if (i == width - 1)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1),
+                            new Edge(nodeGrid[i, j], nodeGrid[i - 1, j - 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j + 1], (float)Math.Sqrt(2))};
+                        }
+                        else if (j == 0)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i, j + 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1),
+                            new Edge(nodeGrid[i, j], nodeGrid[i - 1, j + 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j + 1], (float)Math.Sqrt(2))};
+                        }
+                        else if (j == height - 1)
+                        {
+                            nodeGrid[i, j].Neighbors = new List<Edge> { new Edge(nodeGrid[i, j], nodeGrid[i + 1, j], 1), new Edge(nodeGrid[i, j], nodeGrid[i, j - 1], 1), new Edge(nodeGrid[i, j], nodeGrid[i - 1, j], 1),
+                            new Edge(nodeGrid[i, j], nodeGrid[i - 1, j - 1], (float)Math.Sqrt(2)), new Edge(nodeGrid[i, j], nodeGrid[i + 1, j - 1], (float)Math.Sqrt(2))};
+                        }
+                    }
+                }
+            }
+        }
+
+        public Vector2 curNodePosition
+        {
+            get { return curNode.Position; }
+
+        }
+
         public void Update(GameTime gameTime)
         {
-            if (timer.IsFinished && !hasResult)
+            if (timer.IsFinished && !hasResult && searchType == SearchType.BREADTH)
             {
                 timer.Reset();
                 BreadthFirstSearch();
             }
+            else if (timer.IsFinished && !hasResult && searchType == SearchType.ASTAR)
+            {
+                timer.Reset();
+                AStarSearch();
+            }
+            else if (timer.IsFinished && !hasResult && searchType == SearchType.DIJKSTRA)
+            {
+                timer.Reset();
+                DijkstraSearch();
+            }
             timer.Update(gameTime);
+        }
+
+        public void AStarSearchInitialize(Vector2 start, Vector2 end)
+        {
+
+        }
+
+        public void AStarSearch()
+        {
+
+        }
+
+        public void DijkstraSearchInitialize(Vector2 start, Vector2 end)
+        {
+
+        }
+
+        public void DijkstraSearch()
+        {
+
         }
 
         public void BreadthFirstSearchInitialize(Vector2 start, Vector2 end)
@@ -135,20 +261,20 @@ namespace GridSearching
                     //loop back through the backnodes to find the fastest path
                     while (curNode.BackNode != null)
                     {
-                        curNode = curNode.BackNode;
+                        curNode = curNode.BackNode.GetNeighbor(curNode);
                         curNode.ChangeColor = Color.HotPink;
                     }
                     return;
                 }
 
                 //look through each neighbor to find who we have not checked yet.
-                foreach (Node node in curNode.Neighbors)
+                foreach (Edge edge in curNode.Neighbors)
                 {
-                    if (!node.IsVisited)
+                    if (!edge.GetNeighbor(curNode).IsVisited && !edge.GetNeighbor(curNode).IsObstacle)
                     {
-                        node.IsVisited = true;
-                        node.BackNode = curNode; //sets distance within this property: distance = curnode.GetDistance + 1;
-                        nodeQueue.Enqueue(node);
+                        edge.GetNeighbor(curNode).IsVisited = true;
+                        edge.GetNeighbor(curNode).BackNode = edge; //sets distance within this property: distance = curnode.GetDistance + 1;
+                        nodeQueue.Enqueue(edge.GetNeighbor(curNode));
                     }
                 }
             }
@@ -156,6 +282,11 @@ namespace GridSearching
             {
                 //return error
             }
+        }
+
+        public void UpdateObstacles(Vector2 position)
+        {
+            nodeGrid[(int)position.X, (int)position.Y].UpdateObstacle();
         }
     }
 }

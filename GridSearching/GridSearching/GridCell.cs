@@ -16,6 +16,7 @@ namespace GridSearching
         Vector2 position;
         Vector2 size;
         Color color;
+        bool isBlocked = false;
 
         public GridCell(Game game, Vector2 position, Vector2 size)
             : base(game)
@@ -24,6 +25,23 @@ namespace GridSearching
             this.size = size;
             color = Color.CornflowerBlue;
             LoadContent();
+        }
+
+        public bool IsBlocked
+        {
+            get { return isBlocked; }
+            set
+            {
+                isBlocked = value;
+                if (isBlocked)
+                {
+                    color = Color.Black;
+                }
+                else
+                {
+                    color = Color.CornflowerBlue;
+                }
+            }
         }
 
         public bool IsVisited

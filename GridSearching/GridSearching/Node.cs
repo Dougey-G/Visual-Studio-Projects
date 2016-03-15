@@ -11,34 +11,65 @@ namespace GridSearching
 {
     class Node
     {
-        List<Node> neighbors = new List<Node>();
-        Node back = null;
+        List<Edge> neighbors = new List<Edge>();
+        Edge back = null;
         bool isVisited = false;
+        bool isObstacle = false;
         GridCell gridCell;
-        int distance = 0;
+        float distance = 0;
+        Vector2 position;
 
-        public Node(GridCell gridCell)
+        public Node(GridCell gridCell, int x, int y)
         {
             this.gridCell = gridCell;
+            position = new Vector2(x, y);
+            if (gridCell.IsBlocked)
+            {
+                isObstacle = true;
+            }
         }
 
-        public List<Node> Neighbors
+        public Vector2 Position
+        {
+            get { return position; }
+        }
+
+
+        public List<Edge> Neighbors
         {
             get { return neighbors; }
             set { neighbors = value; }
         }
 
-        public Node BackNode
+        public Edge BackNode
         {
             get { return back; }
             set
             {
                 back = value;
-                distance = back.GetDistance + 1;
+                distance = back.GetNeighbor(this).distance + back.Length;
             }
         }
 
-        public int GetDistance
+        public bool IsObstacle
+        {
+            get { return isObstacle; }
+            set { isObstacle = value; }
+        }
+
+        public void UpdateObstacle()
+        {
+            if (gridCell.IsBlocked)
+            {
+                isObstacle = true;
+            }
+            else
+            {
+                isObstacle = false;
+            }
+        }
+
+        public float GetDistance
         {
             get { return distance; }
         }
