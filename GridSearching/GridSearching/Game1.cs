@@ -117,15 +117,13 @@ namespace GridSearching
             }
             else if (canReset && Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                //canReset = false;
-                //ResetGridForDijkstra();
-                Console.WriteLine("Implement at a later time.");
+                canReset = false;
+                ResetGridForDijkstra();
             }
             else if (canReset && Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                //canReset = false;
-                //ResetGridForAStar();
-                Console.WriteLine("Implement at a later time.");
+                canReset = false;
+                ResetGridForAStar();
             }
             else if (!Keyboard.GetState().IsKeyDown(Keys.Space) && !Keyboard.GetState().IsKeyDown(Keys.B) && !Keyboard.GetState().IsKeyDown(Keys.D) && !Keyboard.GetState().IsKeyDown(Keys.A))
             {

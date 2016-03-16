@@ -16,7 +16,8 @@ namespace GridSearching
         bool isVisited = false;
         bool isObstacle = false;
         GridCell gridCell;
-        float distance = 0;
+        float distance = float.PositiveInfinity;
+        float length = 0;
         Vector2 position;
 
         public Node(GridCell gridCell, int x, int y)
@@ -28,6 +29,19 @@ namespace GridSearching
                 isObstacle = true;
             }
         }
+
+        public float Distance
+        {
+            get { return distance; }
+            set { distance = value; }
+        }
+
+        public float Length
+        {
+            get { return length; }
+            set { length = value; }
+        }
+
 
         public Vector2 Position
         {
@@ -47,7 +61,7 @@ namespace GridSearching
             set
             {
                 back = value;
-                distance = back.GetNeighbor(this).distance + back.Length;
+                //distance = back.GetNeighbor(this).distance + back.Length;
             }
         }
 

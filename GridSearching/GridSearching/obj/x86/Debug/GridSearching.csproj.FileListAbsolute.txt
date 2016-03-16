@@ -52,3 +52,28 @@ F:\Programming\Visual Studio Projects\Visual-Studio-Projects\GridSearching\GridS
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.RawInput.xml
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct3D9.xml
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\GridSearching\GridSearching\obj\x86\Debug\GridSearching.csprojResolveAssemblyReference.cache
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\obj\x86\Debug\GridSearching.exe
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\obj\x86\Debug\GridSearching.pdb
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\obj\x86\Debug\GridSearching.csprojResolveAssemblyReference.cache
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\GridSearching.exe
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\GridSearching.pdb
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\MonoGame.Framework.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.XAudio2.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct3D11.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.DXGI.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct2D1.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.XInput.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.RawInput.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct3D9.dll
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\MonoGame.Framework.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.XAudio2.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct3D11.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.DXGI.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct2D1.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.XInput.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.RawInput.xml
+C:\Users\Ryan\Desktop\VisualStudio\Visual-Studio-Projects\GridSearching\GridSearching\bin\Windows\Debug\SharpDX.Direct3D9.xml

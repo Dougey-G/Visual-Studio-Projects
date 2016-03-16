@@ -27,6 +27,10 @@ namespace GridSearching
         Queue<Node> nodeQueue;
         bool hasResult = false;
 
+        //stuff for priority queue
+        float topPriority;
+        PriorityQueue priorityQueue;
+
         public Graph(GridCell[,] gridCell, int width, int height)
         {
             this.gridCell = gridCell;
@@ -215,22 +219,131 @@ namespace GridSearching
 
         public void AStarSearchInitialize(Vector2 start, Vector2 end)
         {
-
+            this.start = start;
+            this.end = end;
+            timer = new Timer(25);
+            timer.Reset();
+            priorityQueue = new PriorityQueue();
+            priorityQueue.Enqueue(nodeGrid[(int)start.X, (int)start.Y], 0);
+            //priorityQueue.Dequeue(out topValue, out topPriority);
+            nodeGrid[(int)start.X, (int)start.Y].ChangeColor = Color.Red;
+            nodeGrid[(int)start.X, (int)start.Y].IsVisited = true;
+            nodeGrid[(int)end.X, (int)end.Y].ChangeColor = Color.Green;
         }
 
         public void AStarSearch()
         {
+            //Set the distance to all nodes to infinity (i.e. Int32.MaxValue)
+            if (priorityQueue.Count > 0)
+            {
+                priorityQueue.Dequeue(out curNode, out topPriority);
+                curNode.ChangeColor = Color.Yellow;
 
+                //if we have found the target node
+                if (curNode == nodeGrid[(int)end.X, (int)end.Y])
+                {
+                    hasResult = true;
+                    //loop back through the backnodes to find the fastest path
+                    while (curNode.BackNode != null)
+                    {
+                        curNode = curNode.BackNode.GetNeighbor(curNode);
+                        curNode.ChangeColor = Color.HotPink;
+                    }
+                    return;
+                }
+
+                //look through each neighbor to find who we have not checked yet.
+                foreach (Edge edge in curNode.Neighbors)
+                {
+                    if (!edge.GetNeighbor(curNode).IsVisited && !edge.GetNeighbor(curNode).IsObstacle)
+                    {
+                        edge.GetNeighbor(curNode).IsVisited = true;
+                        edge.GetNeighbor(curNode).BackNode = edge; //sets distance within this property: distance = curnode.GetDistance + 1;
+                        priorityQueue.Enqueue(edge.GetNeighbor(curNode), curNode.Length + edge.Length + Vector2.Distance(edge.GetNeighbor(curNode).Position, nodeGrid[(int)end.X, (int)end.Y].Position));
+                        edge.GetNeighbor(curNode).Length = curNode.Length + edge.Length;
+                    }
+                    else if (edge.GetNeighbor(curNode).IsVisited && !edge.GetNeighbor(curNode).IsObstacle)
+                    {
+                        if (edge.GetNeighbor(curNode).Length  > curNode.Length + edge.Length)
+                        {
+                            priorityQueue.ReplacePriority(edge.GetNeighbor(curNode), curNode.Length + edge.Length + Vector2.Distance(edge.GetNeighbor(curNode).Position, nodeGrid[(int)end.X, (int)end.Y].Position));
+                            edge.GetNeighbor(curNode).Length = curNode.Length + edge.Length;
+                            edge.GetNeighbor(curNode).BackNode = edge;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //return error
+            }
         }
 
         public void DijkstraSearchInitialize(Vector2 start, Vector2 end)
         {
-
+            this.start = start;
+            this.end = end;
+            timer = new Timer(25);
+            timer.Reset();
+            priorityQueue = new PriorityQueue();
+            priorityQueue.Enqueue(nodeGrid[(int)start.X, (int)start.Y], 0);
+            //priorityQueue.Dequeue(out topValue, out topPriority);
+            nodeGrid[(int)start.X, (int)start.Y].ChangeColor = Color.Red;
+            nodeGrid[(int)start.X, (int)start.Y].IsVisited = true;
+            nodeGrid[(int)end.X, (int)end.Y].ChangeColor = Color.Green;
         }
 
         public void DijkstraSearch()
         {
+            //Set the distance to all nodes to infinity (i.e. Int32.MaxValue)
+            if (priorityQueue.Count > 0)
+            {
+                priorityQueue.Dequeue(out curNode, out topPriority);
+                curNode.ChangeColor = Color.Yellow;
 
+
+
+                //look through each neighbor to find who we have not checked yet.
+                foreach (Edge edge in curNode.Neighbors)
+                {
+                    if (!edge.GetNeighbor(curNode).IsVisited && !edge.GetNeighbor(curNode).IsObstacle)
+                    {
+                        //if we have found the target node
+                        if (edge.GetNeighbor(curNode) == nodeGrid[(int)end.X, (int)end.Y])
+                        {
+                            hasResult = true;
+                            nodeGrid[(int)end.X, (int)end.Y].BackNode = edge;
+                            curNode = nodeGrid[(int)end.X, (int)end.Y];
+
+                            //loop back through the backnodes to find the fastest path
+                            while (curNode.BackNode != null)
+                            {
+                                curNode = curNode.BackNode.GetNeighbor(curNode);
+                                curNode.ChangeColor = Color.HotPink;
+                            }
+                            return;
+                        }
+
+                        edge.GetNeighbor(curNode).IsVisited = true;
+                        edge.GetNeighbor(curNode).BackNode = edge; //sets distance within this property: distance = curnode.GetDistance + 1;
+                        priorityQueue.Enqueue(edge.GetNeighbor(curNode), curNode.Length + edge.Length);
+                        edge.GetNeighbor(curNode).Length = curNode.Length + edge.Length;
+                    }
+                    else if (edge.GetNeighbor(curNode).IsVisited && !edge.GetNeighbor(curNode).IsObstacle)
+                    {
+                        if (edge.GetNeighbor(curNode).Length > curNode.Length + edge.Length)
+                        {
+                            priorityQueue.ReplacePriority(edge.GetNeighbor(curNode), curNode.Length + edge.Length);
+                            edge.GetNeighbor(curNode).Length = curNode.Length + edge.Length;
+                            edge.GetNeighbor(curNode).BackNode = edge;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //return error
+            }
         }
 
         public void BreadthFirstSearchInitialize(Vector2 start, Vector2 end)
