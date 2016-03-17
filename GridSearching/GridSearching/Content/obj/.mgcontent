@@ -4,6 +4,6 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/CatAndMouseGame/CatAndMouseGame/Content/../../../GridSearching/GridSearching/Content/halfDeadCat.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/GridSearching/GridSearching/Content/halfDeadCat.png</File>
   </SourceFiles>
 </SourceFileCollection>

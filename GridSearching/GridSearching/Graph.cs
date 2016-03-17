@@ -13,26 +13,30 @@ namespace GridSearching
 {
     class Graph
     {
-        enum SearchType { BREADTH, DIJKSTRA, ASTAR }
+        public enum SearchType { BREADTH, DIJKSTRA, ASTAR }
         SearchType searchType;
         GridCell[,] gridCell;
         Node[,] nodeGrid;
         int width, height;
         Timer timer;
+        HalfDeadCat myCat;
 
         //stuff for the search
         Vector2 start;
         Vector2 end;
         Node curNode;
         Queue<Node> nodeQueue;
+        Queue<Vector2> targetPositions;
         bool hasResult = false;
+        bool hasSentResult = false;
 
         //stuff for priority queue
         float topPriority;
         PriorityQueue priorityQueue;
 
-        public Graph(GridCell[,] gridCell, int width, int height)
+        public Graph(GridCell[,] gridCell, int width, int height, HalfDeadCat cat)
         {
+            myCat = cat;
             this.gridCell = gridCell;
             this.width = width;
             this.height = height;
@@ -105,8 +109,9 @@ namespace GridSearching
             }
         }
 
-        public Graph(GridCell[,] gridCell, int width, int height, bool isDijkstra)
+        public Graph(GridCell[,] gridCell, int width, int height, bool isDijkstra, HalfDeadCat cat)
         {
+            myCat = cat;
             this.gridCell = gridCell;
             this.width = width;
             this.height = height;
@@ -197,6 +202,11 @@ namespace GridSearching
 
         }
 
+        public SearchType GetSearchType
+        {
+            get { return searchType; }
+        }
+
         public void Update(GameTime gameTime)
         {
             if (timer.IsFinished && !hasResult && searchType == SearchType.BREADTH)
@@ -214,16 +224,23 @@ namespace GridSearching
                 timer.Reset();
                 DijkstraSearch();
             }
+            else if (hasResult && !hasSentResult)
+            {
+                myCat.GiveTargets(targetPositions);
+                hasSentResult = true;
+            }
             timer.Update(gameTime);
         }
 
         public void AStarSearchInitialize(Vector2 start, Vector2 end)
         {
+            hasSentResult = false;
             this.start = start;
             this.end = end;
             timer = new Timer(25);
             timer.Reset();
             priorityQueue = new PriorityQueue();
+            targetPositions = new Queue<Vector2>();
             priorityQueue.Enqueue(nodeGrid[(int)start.X, (int)start.Y], 0);
             //priorityQueue.Dequeue(out topValue, out topPriority);
             nodeGrid[(int)start.X, (int)start.Y].ChangeColor = Color.Red;
@@ -243,11 +260,13 @@ namespace GridSearching
                 if (curNode == nodeGrid[(int)end.X, (int)end.Y])
                 {
                     hasResult = true;
+                    targetPositions.Enqueue(curNode.Position);
                     //loop back through the backnodes to find the fastest path
                     while (curNode.BackNode != null)
                     {
                         curNode = curNode.BackNode.GetNeighbor(curNode);
-                        curNode.ChangeColor = Color.HotPink;
+                        curNode.ChangeColor = Color.Blue;
+                        targetPositions.Enqueue(curNode.Position);
                     }
                     return;
                 }
@@ -281,13 +300,14 @@ namespace GridSearching
 
         public void DijkstraSearchInitialize(Vector2 start, Vector2 end)
         {
+            hasSentResult = false;
             this.start = start;
             this.end = end;
             timer = new Timer(25);
             timer.Reset();
             priorityQueue = new PriorityQueue();
+            targetPositions = new Queue<Vector2>();
             priorityQueue.Enqueue(nodeGrid[(int)start.X, (int)start.Y], 0);
-            //priorityQueue.Dequeue(out topValue, out topPriority);
             nodeGrid[(int)start.X, (int)start.Y].ChangeColor = Color.Red;
             nodeGrid[(int)start.X, (int)start.Y].IsVisited = true;
             nodeGrid[(int)end.X, (int)end.Y].ChangeColor = Color.Green;
@@ -312,6 +332,7 @@ namespace GridSearching
                         if (edge.GetNeighbor(curNode) == nodeGrid[(int)end.X, (int)end.Y])
                         {
                             hasResult = true;
+                            targetPositions.Enqueue(curNode.Position);
                             nodeGrid[(int)end.X, (int)end.Y].BackNode = edge;
                             curNode = nodeGrid[(int)end.X, (int)end.Y];
 
@@ -319,7 +340,8 @@ namespace GridSearching
                             while (curNode.BackNode != null)
                             {
                                 curNode = curNode.BackNode.GetNeighbor(curNode);
-                                curNode.ChangeColor = Color.HotPink;
+                                curNode.ChangeColor = Color.Blue;
+                                targetPositions.Enqueue(curNode.Position);
                             }
                             return;
                         }
@@ -348,11 +370,13 @@ namespace GridSearching
 
         public void BreadthFirstSearchInitialize(Vector2 start, Vector2 end)
         {
+            hasSentResult = false;
             this.start = start;
             this.end = end;
             timer = new Timer(25);
             timer.Reset();
             nodeQueue = new Queue<Node>();
+            targetPositions = new Queue<Vector2>();
             nodeQueue.Enqueue(nodeGrid[(int)start.X, (int)start.Y]);
             nodeGrid[(int)start.X, (int)start.Y].ChangeColor = Color.Red;
             nodeGrid[(int)start.X, (int)start.Y].IsVisited = true;
@@ -371,11 +395,13 @@ namespace GridSearching
                 if (curNode == nodeGrid[(int)end.X, (int)end.Y])
                 {
                     hasResult = true;
+                    targetPositions.Enqueue(curNode.Position);
                     //loop back through the backnodes to find the fastest path
                     while (curNode.BackNode != null)
                     {
                         curNode = curNode.BackNode.GetNeighbor(curNode);
-                        curNode.ChangeColor = Color.HotPink;
+                        curNode.ChangeColor = Color.Blue;
+                        targetPositions.Enqueue(curNode.Position);
                     }
                     return;
                 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using C3.XNA;
 using System;
 
@@ -21,6 +22,7 @@ namespace GridSearching
         bool canClickAgain = true;
         Vector2 startPosition;
         Vector2 destination;
+        HalfDeadCat myCat;
 
 
         public Game1()
@@ -51,6 +53,9 @@ namespace GridSearching
                     Components.Add(grid[i, j]);
                 }
             }
+            
+            myCat = new HalfDeadCat(this);
+            Components.Add(myCat);
             StartRandomSearch();
             IsMouseVisible = true;
             base.Initialize();
@@ -93,7 +98,18 @@ namespace GridSearching
             {
                 canClickAgain = false;
                 SetDestination();
-                ResetGridForBreadth(true);
+                if (graph.GetSearchType == Graph.SearchType.BREADTH)
+                {
+                    ResetGridForBreadth(true);
+                }
+                else if (graph.GetSearchType == Graph.SearchType.DIJKSTRA)
+                {
+                    ResetGridForDijkstra(true);
+                }
+                else if (graph.GetSearchType == Graph.SearchType.ASTAR)
+                {
+                    ResetGridForAStar(true);
+                }
             }
             else if (canClickAgain && mouse.RightButton == ButtonState.Pressed)
             {
@@ -108,22 +124,33 @@ namespace GridSearching
             if (canReset && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 canReset = false;
-                ResetGridForBreadth(false);
+                if (graph.GetSearchType == Graph.SearchType.BREADTH)
+                {
+                    ResetGridForBreadth(false);
+                }
+                else if (graph.GetSearchType == Graph.SearchType.DIJKSTRA)
+                {
+                    ResetGridForDijkstra(false);
+                }
+                else if (graph.GetSearchType == Graph.SearchType.ASTAR)
+                {
+                    ResetGridForAStar(false);
+                }
             }
             else if (canReset && Keyboard.GetState().IsKeyDown(Keys.B))
             {
                 canReset = false;
-                ResetGridForBreadth(true);
+                ResetGridForBreadth(false);
             }
             else if (canReset && Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 canReset = false;
-                ResetGridForDijkstra();
+                ResetGridForDijkstra(false);
             }
             else if (canReset && Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 canReset = false;
-                ResetGridForAStar();
+                ResetGridForAStar(false);
             }
             else if (!Keyboard.GetState().IsKeyDown(Keys.Space) && !Keyboard.GetState().IsKeyDown(Keys.B) && !Keyboard.GetState().IsKeyDown(Keys.D) && !Keyboard.GetState().IsKeyDown(Keys.A))
             {
@@ -149,7 +176,8 @@ namespace GridSearching
         {
             destination = new Vector2(random.Next(0, graphics.PreferredBackBufferWidth / gridSize - 1), random.Next(0, graphics.PreferredBackBufferHeight / gridSize - 1));
             startPosition = new Vector2(random.Next(0, graphics.PreferredBackBufferWidth / gridSize - 1), random.Next(0, graphics.PreferredBackBufferHeight / gridSize - 1));
-            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize);
+            myCat.SetImmediatePosition(startPosition * gridSize, gridSize);
+            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, myCat);
             graph.BreadthFirstSearchInitialize(startPosition, destination);
         }
 
@@ -157,21 +185,26 @@ namespace GridSearching
         {
             if (startFromCurrentPosition)
                 startPosition = graph.curNodePosition;
-            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize);
+            myCat.SetImmediatePosition(startPosition * gridSize, gridSize);
+            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, myCat);
             graph.BreadthFirstSearchInitialize(startPosition, destination);
         }
 
-        void ResetGridForDijkstra()
+        void ResetGridForDijkstra(bool startFromCurrentPosition)
         {
-            startPosition = graph.curNodePosition;
-            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, true);
+            if (startFromCurrentPosition)
+                startPosition = graph.curNodePosition;
+            myCat.SetImmediatePosition(startPosition * gridSize, gridSize);
+            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, true, myCat);
             graph.DijkstraSearchInitialize(startPosition, destination);
         }
 
-        void ResetGridForAStar()
+        void ResetGridForAStar(bool startFromCurrentPosition)
         {
-            startPosition = graph.curNodePosition;
-            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, false);
+            if (startFromCurrentPosition)
+                startPosition = graph.curNodePosition;
+            myCat.SetImmediatePosition(startPosition * gridSize, gridSize);
+            graph = new Graph(grid, graphics.PreferredBackBufferWidth / gridSize, graphics.PreferredBackBufferHeight / gridSize, false, myCat);
             graph.AStarSearchInitialize(startPosition, destination);
         }
 
@@ -184,7 +217,6 @@ namespace GridSearching
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
