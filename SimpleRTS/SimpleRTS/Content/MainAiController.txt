@@ -1,0 +1,59 @@
+enum AIState { Passive, Aggressive, Defensive };
+AIState aiState;
+
+Units units;
+Buildings buildings;
+
+int goldCount;
+
+GoldMines goldMines;
+
+EnemyStatus enemyStatus;
+
+//I need a tree of some sort to decide the game state changes
+
+
+
+class Units
+{
+	List<Unit>
+	int soldierCount;
+	int peonCount;
+}
+
+class Unit
+{
+	UnitType;
+	health;
+	location;
+	CurrentTask; 
+}
+
+class Buildings
+{
+	List<Building>
+	int baseCount;
+	int barracksCount;
+	int goldRefineryCount;
+}
+
+class Building
+{
+	BuildingType;
+	health;
+	location;
+	CurrentTask;
+}
+
+class GoldMines
+{
+	List<Vector2, int> goldMineInfo;//location of gold mine and how many units we have on it.
+}
+
+class EnemyStatus
+{
+	int howManyAggressiveUnits;
+	int howManyPeons;
+	howCloseAreThey;
+	areTheyAttacking; //is there general movement patterns in the direction of any of our units/buildings
+}

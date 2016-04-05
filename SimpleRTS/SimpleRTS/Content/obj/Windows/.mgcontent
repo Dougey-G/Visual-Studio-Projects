@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/Marine.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/peon.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/goldMine.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/base.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/Arial.spritefont</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/goldRefinery.png</File>
+    <File>F:/Programming/Visual Studio Projects/Visual-Studio-Projects/SimpleRTS/SimpleRTS/Content/barracks.png</File>
+  </SourceFiles>
+</SourceFileCollection>
