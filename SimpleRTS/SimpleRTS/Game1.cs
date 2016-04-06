@@ -33,6 +33,8 @@ namespace SimpleRTS
         Base base1;
         AIAgent agent;
 
+        List<AIAgent> agents = new List<AIAgent>();
+
         Random random = new Random();
         #endregion
 
@@ -65,13 +67,19 @@ namespace SimpleRTS
             goldMines.Add(new GoldMine(this, graph.GetNode(new Vector2(random.Next(0 + graphSize * 3, WINDOW_WIDTH - graphSize * 3), random.Next(0 + graphSize * 3, WINDOW_HEIGHT - graphSize * 3))), graph, null));
             Components.Add(goldMines.Last());
             agent = new AIAgent(this, graph.GetNode(new Vector2(0, 0)), graph, goldMines, Color.Blue);
+            agents.Add(agent);
             Components.Add(agent);
             agent = new AIAgent(this, graph.GetNode(new Vector2(0, WINDOW_HEIGHT - 1)), graph, goldMines, Color.Green);
+            agents.Add(agent);
             Components.Add(agent);
             agent = new AIAgent(this, graph.GetNode(new Vector2(WINDOW_WIDTH - 1, 0)), graph, goldMines, Color.White);
+            agents.Add(agent);
             Components.Add(agent);
             agent = new AIAgent(this, graph.GetNode(new Vector2(WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1)), graph, goldMines, Color.Red);
+            agents.Add(agent);
             Components.Add(agent);
+
+            GiveAgentsEnemies();
 
             IsMouseVisible = true;
             base.Initialize();
@@ -140,8 +148,21 @@ namespace SimpleRTS
             GraphicsDevice.Clear(Color.CornflowerBlue); 
 
             // TODO: Add your drawing code here
-
             base.Draw(gameTime);
+        }
+
+        void GiveAgentsEnemies()
+        {
+            foreach (AIAgent agent in agents)
+            {
+                foreach (AIAgent a in agents)
+                {
+                    if (a != agent)
+                    {
+                        agent.EnemyAgents.Add(a);
+                    }
+                }
+            }
         }
     }
 }

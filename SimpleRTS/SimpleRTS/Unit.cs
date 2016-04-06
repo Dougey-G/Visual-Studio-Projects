@@ -36,6 +36,7 @@ namespace SimpleRTS
         protected AIAgent agent;
         protected float health;
         protected float maxHealth;
+        protected bool isActive = true;
 
         SpriteBatch spriteBatch;
         #endregion
@@ -55,6 +56,12 @@ namespace SimpleRTS
         {
             get { return position; }
             set { position = value; }
+        }
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { isActive = value; }
         }
 
         public Vector2 Velocity
@@ -91,6 +98,10 @@ namespace SimpleRTS
 
         public override void Draw(GameTime gameTime)
         {
+            if (!isActive)
+            {
+                return;
+            }
             spriteBatch.Begin();
             spriteBatch.Draw(sprite, position, null, renderColor, rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), Vector2.One, SpriteEffects.None, 0);
             spriteBatch.End();

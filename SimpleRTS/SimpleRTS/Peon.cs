@@ -70,6 +70,11 @@ namespace SimpleRTS
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (!isActive)
+            {
+                goldText.Text = "";
+                return;
+            }
             goldText.Position = new Vector2(position.X - 8, position.Y - 8);
             goldText.Text = goldCount.ToString();
             if (peonState == PeonState.Moving)

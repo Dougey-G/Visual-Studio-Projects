@@ -16,7 +16,7 @@ namespace SimpleRTS
         AIAgent agent;
 
         public Base(Game1 game, Node node, Graph graph, AIAgent agent)
-            :base(game, graph, agent, agent.RenderColor)
+            :base(game, node, graph, agent, agent.RenderColor)
         {
             buildingType = BuildingType.Base;
             spriteName = "base";
@@ -27,6 +27,7 @@ namespace SimpleRTS
             this.Position = node.Position * Game1.graphSize;
             this.Position = new Vector2(Position.X + 16, Position.Y + 16);
             health = 1000;
+            maxHealth = 1000;
         }
 
         public bool IsWorking
@@ -37,6 +38,11 @@ namespace SimpleRTS
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (!isActive)
+            {
+                healthText.Text = "";
+                return;
+            }
             if (isWorking)
             {
                 timer += gameTime.ElapsedGameTime.Milliseconds;

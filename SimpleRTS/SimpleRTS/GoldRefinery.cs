@@ -10,10 +10,9 @@ namespace SimpleRTS
     {
         float distanceToConsiderClose = 50f;
         AIAgent agent;
-        TextRepresentation healthText;
 
         public GoldRefinery(Game game, Node node, Graph graph, AIAgent agent)
-            : base(game, graph, agent, agent.RenderColor)
+            : base(game, node, graph, agent, agent.RenderColor)
         {
             buildingType = BuildingType.GoldRefinery;
             spriteName = "goldRefinery";
@@ -27,15 +26,17 @@ namespace SimpleRTS
             maxHealth = 1000;
             health = 1;
             agent.GoldCount -= 400;
-            healthText = new TextRepresentation(game, Position);
-            Game.Components.Add(healthText);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            int healthString = (int)health;
-            healthText.Text = healthString.ToString() + " / " + maxHealth.ToString();
+            if (!isActive)
+            {
+                healthText.Text = "";
+                return;
+            }
+
             if (isOperational)
             {
                 return;

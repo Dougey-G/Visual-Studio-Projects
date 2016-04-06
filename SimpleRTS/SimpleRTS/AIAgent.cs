@@ -23,6 +23,12 @@ namespace SimpleRTS
         protected List<GoldMine> goldMines;
         protected bool isAgentGoingToBuildSomething = false;
         protected Vector2 buildingLocation;
+        protected List<AIAgent> enemyAgents = new List<AIAgent>();
+        protected int index = 0;
+        protected bool isActive = true;
+
+        protected Building targetBuilding;
+        protected float targetGold;
 
         public AIAgent(Game game, Node location, Graph graph, List<GoldMine> goldMines, Color renderColor)
             : base(game)
@@ -34,7 +40,7 @@ namespace SimpleRTS
             buildings = new Buildings();
             buildings.GetBase = myBase;
             buildings.GetGoldMines = goldMines;
-            goldText = new TextRepresentation(game, buildings.GetBase.Position);
+            goldText = new TextRepresentation(game, new Vector2(buildings.GetBase.Position.X, buildings.GetBase.Position.Y + 8));
             Game.Components.Add(goldText);
             this.goldMines = goldMines;
             foreach (GoldMine mine in goldMines)
@@ -45,6 +51,12 @@ namespace SimpleRTS
                     buildings.NearestGoldMine = mine;
                 }
             }
+        }
+
+        public List<AIAgent> EnemyAgents
+        {
+            get { return enemyAgents; }
+            set { enemyAgents = value; }
         }
 
 
@@ -68,6 +80,12 @@ namespace SimpleRTS
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (!isActive)
+            {
+                goldText.Text = "";
+                return;
+            }
             goldText.Text = goldCount.ToString();
             if (buildings.NearestGoldMine.GoldRemaining == 0)
             {
@@ -81,11 +99,29 @@ namespace SimpleRTS
                     }
                 }
             }
+            if (buildings.GetBase.Health <= 0)
+            {
+                buildings.DisableAll();
+                units.DisableAll();
+
+                isActive = false;
+                Console.WriteLine(renderColor);
+            }
 
             if (units.Peons.Count < 8 && goldCount >= 50 && !buildings.GetBase.IsWorking)
             {
                 buildings.GetBase.CreatePeon();
                 goldCount -= 50;
+            }
+            else if (units.Soldiers.Count < 10 && goldCount >= 50 && buildings.IsBarracksAvailable())
+            {
+                Barracks b = buildings.GetAvailableBarracks();
+
+                if (b != null)
+                {
+                    b.CreateSoldier();
+                    goldCount -= 50;
+                }
             }
             foreach (Peon peon in units.Peons)
             {
@@ -136,6 +172,31 @@ namespace SimpleRTS
                         peon.GoldCount = 0;
                     }
                     peon.MoveToLocation(buildings.GetBase.Position);
+                }
+            }
+            targetGold = 0;
+            foreach (AIAgent agent in enemyAgents)
+            {
+                if (!agent.isActive)
+                {
+                    enemyAgents.Remove(agent);
+                    index = 0;
+                    break;
+                }
+                else
+                {
+                    if (targetGold < agent.GoldCount)
+                    {
+                        targetBuilding = agent.buildings.GetBase;
+                        targetGold = agent.GoldCount;
+                    }
+                }
+            }
+            foreach (Soldier soldier in units.Soldiers)
+            {
+                if (soldier.soldierState == Soldier.SoldierState.Idle)
+                {
+                    soldier.Attack(targetBuilding);
                 }
             }
         }

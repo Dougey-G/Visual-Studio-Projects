@@ -17,7 +17,7 @@ namespace SimpleRTS
         TextRepresentation goldText;
 
         public GoldMine(Game game, Node node, Graph graph, AIAgent agent)
-            :base (game, graph, agent, Color.White)
+            :base (game, node, graph, agent, Color.White)
         {
             spriteName = "goldMine";
             this.node = node;

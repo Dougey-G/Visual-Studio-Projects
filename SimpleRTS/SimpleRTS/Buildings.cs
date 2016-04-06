@@ -55,6 +55,50 @@ namespace SimpleRTS
             get { return barracks; }
         }
 
+        public bool IsBarracksAvailable()
+        {
+            foreach (Barracks b in barracks)
+            {
+                if (!b.IsWorking)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Barracks GetAvailableBarracks()
+        {
+            foreach (Barracks b in barracks)
+            {
+                if (!b.IsWorking)
+                {
+                    return b;
+                }
+            }
+
+            return null;
+        }
+
+        public void DisableAll()
+        {
+            foreach (Building b in unfinishedBuildings)
+            {
+                b.IsActive = false;
+            }
+
+            foreach (Building b in barracks)
+            {
+                b.IsActive = false;
+            }
+
+            if (refinery != null)
+            {
+                refinery.IsActive = false;
+            }
+            
+            myBase.IsActive = false;
+        }
 
         public bool IsBuildingInProgress(Building.BuildingType buildingType)
         {

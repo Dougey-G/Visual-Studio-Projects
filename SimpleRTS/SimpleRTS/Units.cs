@@ -27,6 +27,19 @@ namespace SimpleRTS
             get { return soldiers; }
         }
 
+        public void DisableAll()
+        {
+            foreach (Peon p in peons)
+            {
+                p.IsActive = false;
+            }
+
+            foreach (Soldier s in soldiers)
+            {
+                s.IsActive = false;
+            }
+        }
+
 
         public void AddPeon(Peon peon)
         {

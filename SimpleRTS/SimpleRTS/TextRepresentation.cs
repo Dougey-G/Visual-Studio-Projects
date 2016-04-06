@@ -55,7 +55,6 @@ namespace SimpleRTS
         {
             spriteBatch.Begin();
             spriteBatch.DrawString(font, text, position, Color.White);
-            //spriteBatch.DrawString(font, text, position, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             spriteBatch.End();
             base.Draw(gameTime);
         }

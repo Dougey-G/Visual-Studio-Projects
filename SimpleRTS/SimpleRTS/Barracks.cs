@@ -14,10 +14,9 @@ namespace SimpleRTS
 
         Vector2 locationToPlaceSoldier;
         AIAgent agent;
-        TextRepresentation healthText;
 
         public Barracks(Game game, Node node, Graph graph, AIAgent agent)
-            :base (game, graph, agent, agent.RenderColor)
+            :base (game, node, graph, agent, agent.RenderColor)
         {
             buildingType = BuildingType.Barracks;
             spriteName = "barracks";
@@ -26,14 +25,10 @@ namespace SimpleRTS
             isOperational = false;
             this.node.IsBlocked = true;
             timeToCreate = 60000; //60 seconds
-            this.Position = node.Position * Game1.graphSize;
-            this.Position = new Vector2(Position.X + 16, Position.Y + 16);
             maxHealth = 1500;
             health = 1;
             agent.GoldCount -= 500;
             agent.buildings.UnfinishedBuildings.Add(this);
-            healthText = new TextRepresentation(game, Position);
-            Game.Components.Add(healthText);
         }
 
         public bool IsWorking
@@ -44,8 +39,12 @@ namespace SimpleRTS
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            int healthString = (int)health;
-            healthText.Text = healthString.ToString() + " / " + maxHealth.ToString();
+            if (!isActive)
+            {
+                healthText.Text = "";
+                return;
+            }
+
             if (!isOperational && !isBeingWorkedOn)
             {
                 foreach (Peon peon in agent.units.Peons)
@@ -79,6 +78,10 @@ namespace SimpleRTS
                     }
                 }
                 health = maxHealth * (timer / timeToCreate);
+                if (isOperational)
+                {
+                    timer = 0;
+                }
             }
             else if (isWorking && isOperational)
             {
