@@ -249,6 +249,11 @@
             HALF_CELL_SIZE - half of a cell size to save some math
             </summary>
         </member>
+        <member name="F:GDD3400_RTS_Lib.Constants.SCALE">
+            <summary>
+            SCALE - scale of GUI elements
+            </summary>
+        </member>
         <member name="F:GDD3400_RTS_Lib.Constants.NUMBER_PLAYERS">
             <summary>
             NUMBER_PLAYERS - number of on-screen agents (not units...)
@@ -272,6 +277,16 @@
         <member name="F:GDD3400_RTS_Lib.Constants.BACKGROUND_COLOR">
             <summary>
             BACKGROUND_COLOR - color of background
+            </summary>
+        </member>
+        <member name="F:GDD3400_RTS_Lib.Constants.USE_TERRAIN_SEED">
+            <summary>
+            True to use a hard-coded seed, false otherwise
+            </summary>
+        </member>
+        <member name="F:GDD3400_RTS_Lib.Constants.TERRAIN_SEED">
+            <summary>
+            Seed to use for GameManager's random number generator
             </summary>
         </member>
         <member name="F:GDD3400_RTS_Lib.Constants.SHOW_PATHFINDING">
@@ -732,6 +747,13 @@
         <member name="P:GDD3400_RTS_Lib.UnitSprite.MineUnit">
             <summary>
             Current main mine of this unit
+            null otherwise
+            </summary>
+        </member>
+        <member name="P:GDD3400_RTS_Lib.UnitSprite.AttackUnit">
+            <summary>
+            Unit that this unit is attacking
+            null otherwise
             </summary>
         </member>
         <member name="P:GDD3400_RTS_Lib.UnitSprite.HitPoints">

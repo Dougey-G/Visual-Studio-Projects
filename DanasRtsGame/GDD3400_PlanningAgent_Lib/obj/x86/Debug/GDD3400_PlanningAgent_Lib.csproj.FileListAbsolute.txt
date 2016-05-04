@@ -37,3 +37,22 @@ F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD340
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\GDD3400_PlanningAgent_Lib.dll
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\GDD3400_PlanningAgent_Lib.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\GDD3400_PlanningAgent_Lib.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\GDD3400_PlanningAgent_Lib.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\GDD3400_RTS_Lib.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Game.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\GDD3400_RTS_Lib.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\GDD3400_RTS_Lib.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Game.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\GDD3400_PlanningAgent_Lib.csprojResolveAssemblyReference.cache
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\GDD3400_PlanningAgent_Lib.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_PlanningAgent_Lib\obj\x86\Debug\GDD3400_PlanningAgent_Lib.pdb

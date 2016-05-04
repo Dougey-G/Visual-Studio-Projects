@@ -26,10 +26,14 @@ namespace GDD3400_Pathfinding
             // GDD3400_Pathfinding project folder within this solution.
             string[] dlls =
             {
-                @"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_PlanningAgent_Lib.dll",
-                @"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
-                @"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
-                @"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll"
+                //@"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_PlanningAgent_Lib.dll",
+                //@"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
+                //@"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
+                //@"F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll"
+                @"D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_PlanningAgent_Lib.dll",
+                @"D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
+                @"D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll",
+                @"D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\BasePlanningAgent.dll"
             };
 
             // For each of the DLL files, load it and then launch

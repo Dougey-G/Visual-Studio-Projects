@@ -39,6 +39,7 @@ namespace GDD3400_PlanningAgent_Lib
         public List<UnitSprite> bases;
         public List<UnitSprite> barracks;
         public List<UnitSprite> refineries;
+        public bool isDead = false;
 
         int agentNbr;
 
@@ -73,6 +74,11 @@ namespace GDD3400_PlanningAgent_Lib
             if (bases.Count > 0)
             {
                 mainBase = bases[0];
+            }
+
+            if (units.Count == 0)
+            {
+                isDead = true;
             }
 
             FindClosestMine();
@@ -160,10 +166,10 @@ namespace GDD3400_PlanningAgent_Lib
         List<Enemy> enemies = new List<Enemy>();
         bool ranOnce = false;
 
-        public PlanningAgent()
-        {
+        Vector2 averageBuildingLocation;
+        float radiusToCheck = 0;
 
-        }
+        public PlanningAgent(){}
 
         #region Private Methods
 
@@ -193,6 +199,7 @@ namespace GDD3400_PlanningAgent_Lib
 
         private void RunOnce()
         {
+            FindOurDefensiveRadius();
             foreach (UnitSprite b in gameState.Units.Where(y => y.AgentNbr != AgentNbr && y.UnitType == UnitType.BASE).ToList())
             {
                 enemies.Add(new Enemy(b.AgentNbr));
@@ -253,6 +260,7 @@ namespace GDD3400_PlanningAgent_Lib
                             2, Constants.GRID_HEIGHT / 2 - 4, 
                             2, Constants.GRID_WIDTH / 2 - 6);
                         Build(unit, toBuild, UnitType.BARRACKS);
+                        FindOurDefensiveRadius();
                     }
                     //// If we have enough gold and need a refinery, build a refinery
                     //else if (Gold > Constants.COST[(int)UnitType.REFINERY]
@@ -276,7 +284,7 @@ namespace GDD3400_PlanningAgent_Lib
             // Process the Base
             foreach (UnitSprite unit in myBases)
             {
-                if (unit.CurrentAction == UnitAction.IDLE && myPeons.Count < 15
+                if (unit.CurrentAction == UnitAction.IDLE && myPeons.Count < 12
                     && Gold >= Constants.COST[(int)UnitType.PEON])
                 {
                     Train(unit, UnitType.PEON);
@@ -301,11 +309,166 @@ namespace GDD3400_PlanningAgent_Lib
             // For each soldier, determine what they should attack
             foreach (UnitSprite unit in mySoldiers)
             {
+                float closeDistance = 9999;
+                UnitSprite target = null;
+
                 if (unit.CurrentAction == UnitAction.IDLE)
                 {
-                    
+                    //First check to see if there are any soldiers or peons in our radius
+                    //If so, have each soldier attack the nearest enemy that is in our bounds.
+                    foreach (Enemy e in enemies)
+                    {
+                        foreach (UnitSprite soldier in e.soldiers)
+                        {
+                            if (Vector2.Distance(soldier.Position, averageBuildingLocation) < radiusToCheck)
+                            {
+                                float distance = Vector2.Distance(unit.Position, soldier.Position);
+                                if (distance < closeDistance)
+                                {
+                                    closeDistance = distance;
+                                    target = soldier;
+                                }
+                            }
+                        }
+                        foreach (UnitSprite peon in e.peons)
+                        {
+                            if (Vector2.Distance(peon.Position, averageBuildingLocation) < radiusToCheck)
+                            {
+                                float distance = Vector2.Distance(unit.Position, peon.Position) * 2;
+                                if (distance < closeDistance)
+                                {
+                                    closeDistance = distance;
+                                    target = peon;
+                                }
+                            }
+
+                        }
+                    }
+
+                    //if we found someone we should be attacking, attack them.
+                    if (target != null)
+                    {
+                        unit.AttackUnit = target;
+                    }
+
+                    //there is only one enemy left, attack them.
+                    else if (enemies.Count == 1)
+                    {
+                        foreach (UnitSprite soldier in enemies[0].soldiers)
+                        {
+                            float distance = Vector2.Distance(unit.Position, soldier.Position);
+                            if (distance < closeDistance)
+                            {
+                                closeDistance = distance;
+                                target = soldier;
+                            }
+                        }
+                        foreach (UnitSprite peon in enemies[0].peons)
+                        {
+                            float distance = Vector2.Distance(unit.Position, peon.Position) * 2;
+                            if (distance < closeDistance)
+                            {
+                                closeDistance = distance;
+                                target = peon;
+                            }
+                        }
+                        foreach (UnitSprite barracks in enemies[0].barracks)
+                        {
+                            float distance = Vector2.Distance(unit.Position, barracks.Position) * 3;
+                            if (distance < closeDistance)
+                            {
+                                closeDistance = distance;
+                                target = barracks;
+                            }
+                        }
+                        foreach (UnitSprite b in enemies[0].bases)
+                        {
+                            float distance = Vector2.Distance(unit.Position, b.Position) * 4;
+                            if (distance < closeDistance)
+                            {
+                                closeDistance = distance;
+                                target = b;
+                            }
+                        }
+                        foreach (UnitSprite r in enemies[0].refineries)
+                        {
+                            float distance = Vector2.Distance(unit.Position, r.Position) * 8;
+                            if (distance < closeDistance)
+                            {
+                                closeDistance = distance;
+                                target = r;
+                            }
+                        }
+
+                        //if there are still targets to attack
+                        if (target != null)
+                        {
+                            unit.AttackUnit = target;
+                        }
+                    }
+
+                    //nothing is in our range and we are still playing defensive
+                    //just make the soldiers move around to intelligent locations
+                    else
+                    {
+
+                    }
                 }
             }
+        }
+
+        private void FindOurDefensiveRadius()
+        {
+            Vector2 average = Vector2.Zero;
+            float farthestDistance = 0;
+            int count = 0;
+            foreach (UnitSprite b in myBases)
+            {
+                average += b.Position;
+                count++;
+            }
+            foreach (UnitSprite b in myBarracks)
+            {
+                average += b.Position;
+                count++;
+            }
+            foreach (UnitSprite r in myRefineries)
+            {
+                average += r.Position;
+                count++;
+            }
+            if (count == 0)
+            {
+                return;
+            }
+            else
+            {
+                average /= count;
+            }
+
+            foreach (UnitSprite b in myBases)
+            {
+                if (Vector2.Distance(average, b.Position) > farthestDistance)
+                {
+                    farthestDistance = Vector2.Distance(average, b.Position);
+                }
+            }
+            foreach (UnitSprite b in myBarracks)
+            {
+                if (Vector2.Distance(average, b.Position) > farthestDistance)
+                {
+                    farthestDistance = Vector2.Distance(average, b.Position);
+                }
+            }
+            foreach (UnitSprite r in myRefineries)
+            {
+                if (Vector2.Distance(average, r.Position) > farthestDistance)
+                {
+                    farthestDistance = Vector2.Distance(average, r.Position);
+                }
+            }
+            radiusToCheck = farthestDistance * 1.1f;
+            averageBuildingLocation = average;
         }
 
         #endregion
@@ -344,9 +507,14 @@ namespace GDD3400_PlanningAgent_Lib
                 RunOnce();
             }
 
-            foreach (Enemy e in enemies)
+            for (int i = enemies.Count - 1; i >= 0; i--)
             {
-                e.Update(gameTime, gameState);
+                enemies[i].Update(gameTime, gameState);
+                if (enemies[i].isDead)
+                {
+                    enemies.RemoveAt(i);
+                    Console.WriteLine("Enemy removed");
+                }
             }
 
             if (myBases.Count > 0)
@@ -392,5 +560,11 @@ namespace GDD3400_PlanningAgent_Lib
         }
 
         #endregion
+    }
+
+    static class TuningConstants
+    {
+        public static float DISTANCE_TO_AGGRO = 3f;
+
     }
 }

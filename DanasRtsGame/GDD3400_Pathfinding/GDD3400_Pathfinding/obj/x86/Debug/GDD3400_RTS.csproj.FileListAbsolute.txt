@@ -61,3 +61,35 @@ F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD340
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\GDD3400_Pathfinding.exe
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\GDD3400_Pathfinding.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\barracks.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\base.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\mine.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\peon.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\refinery.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\soldier.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Sprites\wall.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Fonts\SegoeSmall.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Content\Fonts\SegoeLarge.xnb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_Pathfinding.exe
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_Pathfinding.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_Pathfinding.exe.CodeAnalysisLog.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_Pathfinding.exe.lastcodeanalysissucceeded
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_PlanningAgent_Lib.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_RTS_Lib.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Game.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.dll
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_PlanningAgent_Lib.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_RTS_Lib.pdb
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\GDD3400_RTS_Lib.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Game.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Graphics.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.GamerServices.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\bin\x86\Debug\Microsoft.Xna.Framework.Input.Touch.xml
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\GDD3400_RTS.csprojResolveAssemblyReference.cache
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\GDD3400_Pathfinding.exe
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_Pathfinding\obj\x86\Debug\GDD3400_Pathfinding.pdb

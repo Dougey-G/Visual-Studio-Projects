@@ -1,2 +1,3 @@
 C:\Users\dwortman\Documents\Visual Studio 2015\Projects\GDD3400_RTS_Library\GDD3400_Pathfinding\GDD3400_PathfindingContent\obj\x86\Debug\GDD3400_RTS_Content.contentprojResolveAssemblyReference.cache
 F:\Programming\Visual Studio Projects\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_PathfindingContent\obj\x86\Debug\GDD3400_RTS_Content.contentprojResolveAssemblyReference.cache
+D:\Visual-Studio-Projects\DanasRtsGame\GDD3400_Pathfinding\GDD3400_PathfindingContent\obj\x86\Debug\GDD3400_RTS_Content.contentprojResolveAssemblyReference.cache
