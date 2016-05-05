@@ -169,6 +169,9 @@ namespace GDD3400_PlanningAgent_Lib
         Vector2 averageBuildingLocation;
         float radiusToCheck = 0;
 
+        float timer = 0;
+        float timeForUpdates = .01f;
+
         public PlanningAgent(){}
 
         #region Private Methods
@@ -199,6 +202,7 @@ namespace GDD3400_PlanningAgent_Lib
 
         private void RunOnce()
         {
+            FindClosestMine();
             FindOurDefensiveRadius();
             foreach (UnitSprite b in gameState.Units.Where(y => y.AgentNbr != AgentNbr && y.UnitType == UnitType.BASE).ToList())
             {
@@ -348,7 +352,7 @@ namespace GDD3400_PlanningAgent_Lib
                     //if we found someone we should be attacking, attack them.
                     if (target != null)
                     {
-                        unit.AttackUnit = target;
+                        Attack(unit, target);
                     }
 
                     //there is only one enemy left, attack them.
@@ -411,7 +415,36 @@ namespace GDD3400_PlanningAgent_Lib
                     //just make the soldiers move around to intelligent locations
                     else
                     {
-
+                        Move(unit, FindRandomOpenCellToBuildWithinRange(
+                            2, Constants.GRID_HEIGHT / 2 - 4,
+                            2, Constants.GRID_WIDTH / 2 - 6));
+                    }
+                }
+                else if(enemies.Count != 1 && unit.CurrentAction == UnitAction.ATTACK)
+                {
+                    if (Vector2.Distance(unit.Position, averageBuildingLocation) > radiusToCheck)
+                    {
+                        Move(unit, FindRandomOpenCellToBuildWithinRange(
+                            2, Constants.GRID_HEIGHT / 2 - 4,
+                            2, Constants.GRID_WIDTH / 2 - 6));
+                    }
+                }
+                else if (unit.CurrentAction == UnitAction.MOVE)
+                {
+                    foreach (Enemy e in enemies)
+                    {
+                        foreach (UnitSprite soldier in e.soldiers)
+                        {
+                            if (Vector2.Distance(soldier.Position, averageBuildingLocation) < radiusToCheck)
+                            {
+                                float distance = Vector2.Distance(unit.Position, soldier.Position);
+                                if (distance < closeDistance)
+                                {
+                                    closeDistance = distance;
+                                    target = soldier;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -507,34 +540,42 @@ namespace GDD3400_PlanningAgent_Lib
                 RunOnce();
             }
 
-            for (int i = enemies.Count - 1; i >= 0; i--)
-            {
-                enemies[i].Update(gameTime, gameState);
-                if (enemies[i].isDead)
-                {
-                    enemies.RemoveAt(i);
-                    Console.WriteLine("Enemy removed");
-                }
-            }
+
 
             if (myBases.Count > 0)
             {
                 mainBase = myBases[0];
             }
 
-            
 
-            FindClosestMine();
+
+                for (int i = enemies.Count - 1; i >= 0; i--)
+                {
+                    enemies[i].Update(gameTime, gameState);
+                    if (enemies[i].isDead)
+                    {
+                        enemies.RemoveAt(i);
+                        Console.WriteLine("Enemy removed");
+                    }
+                }
+           
+            timer += gameTime.ElapsedGameTime.Milliseconds;
+            if (timer > timeForUpdates)
+            {
+                FindClosestMine();
+
+                ProcessPeons();
+
+                ProcessBarracks();
+
+                ProcessBases();
+
+                timer = 0;
+            }
 
             EstimateGoldIncome();
-
-            ProcessPeons();
-
             ProcessSoldiers();
 
-            ProcessBarracks();
-
-            ProcessBases();
 
             // Use this debugger to display any messages you want to the
             // primary XNA window, just add a string to this list.  As an
